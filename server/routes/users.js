@@ -49,11 +49,11 @@ users.post('/login', (req, res) => {
   console.log(db)
   let username = mObj.loginName
   let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE)
-  console.log(username, mObj.loginPawd)
   const selectUser = `SELECT * FROM user where username='${username}'`
+  console.log(selectUser)
   db.query(selectUser, (err, data) => {
     if (err) {
-      console.log('todo'+err)
+      console.log('todo' + err)
       res.send({ 'msg': '服务器出错', 'status': 0 }).end()
     } else {
       if (data.length === 0) {

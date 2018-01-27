@@ -1,5 +1,23 @@
 <template>
   <div class="hello">
+    <div class="search">
+ <el-select v-model="value" placeholder="请选择">
+    <el-option
+      v-for="item in selectData"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+  <el-date-picker
+      v-model="startDate"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+  <el-button type="primary">主要按钮</el-button>
+  <el-button type="primary" :loading="true">加载中</el-button>
+    </div>
+    <div>
     <el-table
     :data="tableData"
     border
@@ -57,6 +75,7 @@
     </el-pagination>
   </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -67,6 +86,24 @@ export default {
   },
   data () {
     return {
+      startDate: '',
+      selectData: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: '',
       currentPage1: 5,
       currentPage2: 5,
       currentPage3: 5,
@@ -78,6 +115,14 @@ export default {
         address: 'Laddress'
       }],
       loading: false
+    }
+  },
+  methods: {
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
     }
   }
 }

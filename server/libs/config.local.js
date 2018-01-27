@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 exports.mysql = {
   // 单数据库信息配置
   client: {
     // host
     host: 'localhost',
     // 端口号
-    //port: '3306',
+    // port: '3306',
     // 用户名
     user: 'root',
     // 密码
@@ -17,5 +17,5 @@ exports.mysql = {
   app: true,
   // 是否加载到 agent 上，默认关闭
   agent: false
-};
+}
 // await app.mysql.query(sql, values);

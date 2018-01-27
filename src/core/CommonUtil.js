@@ -8,7 +8,7 @@ CommonUtil.isStrEmpty = function (text) {
   if (text === undefined || text == null || text === '' || text === 'null' || text === 'undefined') {
     return true
   }
-  return text.replace(/(\s*$)/g, '') == ''
+  return text.replace(/(\s*$)/g, '') === ''
 }
 CommonUtil.trim = function (str) { // 删除左右两端的空格
   return str.replace(/(^\s*)|(\s*$)/g, '')
@@ -21,7 +21,7 @@ CommonUtil.rtrim = function (str) { // 删除右边的空格
 }
 
 CommonUtil.isObjEmpty = function (obj) {
-  if (obj != null && obj != undefined && typeof (obj) === 'object') {
+  if (obj != null && obj !== undefined && typeof (obj) === 'object') {
     for (var prop in obj) return false
   }
   return true

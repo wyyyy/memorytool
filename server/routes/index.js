@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
 const mysql = require('mysql')
-const common = require('../libs/common')
 const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
@@ -25,7 +24,7 @@ function getHomeDatas (getHomeStr, res) {
       console.log(err)
       res.status(500).send('database err').end()
     } else {
-      if (data.length == 0) {
+      if (data.length === 0) {
         res.status(500).send('no datas').end()
       } else {
         res.send(data)

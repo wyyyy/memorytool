@@ -3,7 +3,7 @@
     <el-form-item label="活动名称">Login</el-form-item>
    <el-form ref="form" :model="form" label-width="80px">
   <el-form-item label="UserName">
-    <el-input v-model="form.username"></el-input>
+    <el-input v-model="form.username" placeholder="username"></el-input>
   </el-form-item>
    <el-form-item label="Password" prop="password">
     <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
@@ -20,9 +20,10 @@ export default {
   name: 'login',
   data () {
     return {
+      placestr: 'Pls input the username',
       form: {
-        username: 'wzh',
-        password: '123'
+        username: 'admin',
+        password: 'admin'
       },
       info: '',
       rules: {

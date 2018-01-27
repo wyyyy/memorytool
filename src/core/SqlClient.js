@@ -22,12 +22,11 @@ SqlClient.prototype = {
       console.log('##    sql: ' + sql)
       connection.query(sql, function (err, result) {
         if (err) {
-		        	console.log('[getById error] - ', err.message)
+		        	console.log(CommonUtil.toTimeString(Date) + '[getById error] - ', err.message)
 		        	return
 		        }
         if (result != null && result.length > 0) {
           obj = result[0]
-          // 将结果里的null 转换为 ''
           for (var name in obj) {
             if (obj.hasOwnProperty(name) && name != 'id') {
               if (obj[name] == 'null' || obj[name] == 'undefined' || obj[name] == null) obj[name] = ''
