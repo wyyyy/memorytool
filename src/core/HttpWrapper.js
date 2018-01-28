@@ -1,15 +1,15 @@
-require('../core/CommonUtil')
+var CommonUtil = require('../core/CommonUtil')
 
 /**
  * request 包装
  */
 var HttpWrapper = function () {}
 HttpWrapper.wrapReqParams = function (req, obj) {
-  if (obj != null && obj != undefined) {
+  if (obj != null && obj !== undefined) {
     if (typeof (obj) === 'object') {
       var params = CommonUtil.isObjEmpty(req.query) ? req.body : req.query
       for (var p in obj) {
-        if (params[p] != undefined) { obj[p] = params[p] }
+        if (params[p] !== undefined) { obj[p] = params[p] }
       }
       return obj
     }

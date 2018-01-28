@@ -5,7 +5,7 @@ const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '123456',
-  database: 'node_cms'
+  database: 'vhr'
 })
 /* GET home page. */
 router.get('/', function (req, res, next) {

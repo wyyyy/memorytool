@@ -6,7 +6,7 @@ const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '123456',
-  database: 'node_cms'
+  database: 'vhr'
 })
 /* GET users listing. */
 users.get('/', function (req, res, next) {

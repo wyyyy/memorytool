@@ -14,14 +14,13 @@
       type="date"
       placeholder="选择日期">
     </el-date-picker>
-  <el-button type="primary">主要按钮</el-button>
-  <el-button type="primary" :loading="true">加载中</el-button>
+  <el-button type="primary" v-on:click="search" :loading="loadingBtn">Search</el-button>
     </div>
     <div>
     <el-table
     :data="tableData"
     border
-    v-loading="loading"
+    v-loading="loadingTb"
     style="width: 90%">
     <el-table-column type="expand">
       <template slot-scope="props">
@@ -29,49 +28,57 @@
           <el-form-item label="商品名称">
             <span>{{ props.row.name }}</span>
           </el-form-item>
-          <el-form-item label="所属店铺">
-            <span>{{ props.row.shop }}</span>
+          <el-form-item label="UserName">
+            <span>{{ props.row.username }}</span>
           </el-form-item>
-          <el-form-item label="商品 ID">
+          <el-form-item label="User ID">
             <span>{{ props.row.id }}</span>
           </el-form-item>
-          <el-form-item label="店铺 ID">
-            <span>{{ props.row.shopId }}</span>
+          <el-form-item label="ID">
+            <span>{{ props.row.username }}</span>
           </el-form-item>
-          <el-form-item label="商品分类">
-            <span>{{ props.row.category }}</span>
+          <el-form-item label="username">
+            <span>{{ props.row.username }}</span>
           </el-form-item>
-          <el-form-item label="店铺地址">
+          <el-form-item label="username">
             <span>{{ props.row.address }}</span>
           </el-form-item>
-          <el-form-item label="商品描述">
-            <span>{{ props.row.desc }}</span>
+          <el-form-item label="Desc">
+            <span>{{ props.row.userface }}</span>
           </el-form-item>
         </el-form>
       </template>
     </el-table-column>
     <el-table-column
-      label="商品 ID"
+      label="User ID"
       prop="id">
     </el-table-column>
     <el-table-column
-      label="商品名称"
+      label="Name"
       prop="name">
     </el-table-column>
     <el-table-column
-      label="描述"
-      prop="desc">
+      label="User Name"
+      prop="username">
+    </el-table-column>
+    <el-table-column
+      label="Phone"
+      prop="phone">
+    </el-table-column>
+    <el-table-column
+      label="Tel"
+      prop="telephone">
     </el-table-column>
   </el-table>
   <div class="block">
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :current-page="currentPage"
+      :page-sizes="[2,10, 20, 50, 60]"
+      :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="0">
     </el-pagination>
   </div>
   </div>
@@ -104,20 +111,40 @@ export default {
         label: '北京烤鸭'
       }],
       value: '',
-      currentPage1: 5,
-      currentPage2: 5,
+      currentPage: 1,
+      pagesize: 2,
       currentPage3: 5,
       currentPage4: 4,
       tableData: [{
-        date: '2017-01-24',
         id: '2017-01-24',
         name: 'name',
+        username: 'nameZh',
         address: 'Laddress'
       }],
-      loading: false
+      loadingTb: false,
+      loadingBtn: false
     }
   },
   methods: {
+    search: function (event) {
+      var _this = this
+      _this.loadingBtn = true
+      let params = {
+        pageSize: this.pagesize,
+        pageIndex: this.currentPage,
+        loginP3awd: this.currentPage
+      }
+      console.log(params)
+      this.$http.get('/sc/list', {params: params})
+        .then(function (response) {
+          console.log(response.data.length + 'response')
+          console.log(_this.tableData = response.data)
+        })
+        .catch(function (error) {
+          console.log('error:' + error)
+        })
+      _this.loadingBtn = false
+    },
     handleSizeChange (val) {
       console.log(`每页 ${val} 条`)
     },

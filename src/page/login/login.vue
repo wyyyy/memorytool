@@ -41,13 +41,15 @@ export default {
     onSubmit () {
       console.log('lgo login submit')
       console.log(this.form.username)
-      let loginParam = {
+      let params = {
         loginName: this.form.username,
         loginPawd: this.form.password
       }
-      this.$http.post('/users/login', loginParam)
+      this.$http.post('/users/login', params)
         .then(function (response) {
+          console.log('/users/login')
           console.log(response)
+          console.log(response.data)
           let expireDays = 1000 * 60 * 60 * 24 * 15
           this.setCookie('session', response.data.session, expireDays)
           this.$router.push('/user_info')

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 // const cookieSession = require('cookie-session')
 var index = require('./routes/index')
 var users = require('./routes/users')
+var sc = require('./routes/sc')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -12,16 +13,18 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
-  console.log('server.*')
-  if (req.method === 'OPTIONS') {
+  next()
+  /* if (req.method === 'OPTIONS') {
     res.sendStatus(200)
     // make the require of options turn back quickly/
   } else {
     next()
-  }
+  } */
+  console.log('server.*')
 })
 app.use('/', index)
 app.use('/users', users)
+app.use('/sc', sc)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found')
