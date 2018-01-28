@@ -111,7 +111,7 @@ export default {
         label: '北京烤鸭'
       }],
       value: '',
-      currentPage: 1,
+      currentPage: 0,
       pagesize: 2,
       currentPage3: 5,
       currentPage4: 4,
