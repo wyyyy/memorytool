@@ -1,18 +1,35 @@
 <template>
-     <div class="hello">
-    <el-form-item label="活动名称">Login</el-form-item>
-   <el-form ref="form" :model="form" label-width="80px">
-  <el-form-item label="UserName">
-    <el-input v-model="form.username" placeholder="username"></el-input>
-  </el-form-item>
-   <el-form-item label="Password" prop="password">
-    <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="onSubmit">SubmitLogin</el-button>
-    <el-button>Cancel</el-button>
-  </el-form-item>
-</el-form>
+  <div class="hello">
+    <form  role="form" method="post" onsubmit="return false">
+      <fieldset>
+        <legend></legend>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <p class="tc">请先登录</p>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <div class="input-group">
+                  <el-input v-model="form.username" placeholder="username"></el-input>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-lock"></span>
+                </span>
+                <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <el-button type="primary" @click="onSubmit">Submit</el-button>
+            </div>
+
+          </div>
+        </div>
+      </fieldset>
+    </form>
   </div>
 </template>
 <script>
@@ -39,20 +56,20 @@ export default {
   },
   methods: {
     onSubmit () {
+      var _this = this
       console.log('lgo login submit')
       console.log(this.form.username)
       let params = {
         loginName: this.form.username,
         loginPawd: this.form.password
       }
-      this.$http.post('/users/login', params)
+      this.$http
+        .post('/users/login', params)
         .then(function (response) {
-          console.log('/users/login')
-          console.log(response)
           console.log(response.data)
           let expireDays = 1000 * 60 * 60 * 24 * 15
-          this.setCookie('session', response.data.session, expireDays)
-          this.$router.push('/user_info')
+          _this.setCookie('session', response.data.session, expireDays)
+          _this.$router.push('/home')
         })
         .catch(function (error) {
           console.log(error)
@@ -72,19 +89,4 @@ export default {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>

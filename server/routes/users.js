@@ -1,15 +1,17 @@
 var express = require('express')
 var users = express.Router()
-const mysql = require('mysql')
 const common = require('../libs/common')
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'vhr'
-})
+// var dbpool = require('../libs/db.pool')
+var db = require('../libs/db')
 /* GET users listing. */
 users.get('/', function (req, res, next) {
+  var user = req.session.user
+  console.log('router.o' + user)
+  next()
+})
+users.get('/login', function (req, res, next) {
+  var user = req.session.user
+  console.log('router.o' + user)
   next()
 })
 /*
@@ -46,7 +48,7 @@ users.post('/login', (req, res) => {
     mObj = JSON.parse(obj)
     console.log(mObj)
   }
-  console.log(db)
+  console.log(mObj.loginPawd)
   let username = mObj.loginName
   let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE)
   const selectUser = `SELECT * FROM user where username='${username}'`
@@ -61,14 +63,14 @@ users.post('/login', (req, res) => {
       } else {
         let dataw = data[0]
         // login sucess
-        if (dataw.login_password === password) {
+        if (dataw.password === password) {
           // save the session
-          req.session['user_id'] = dataw.user_id
+          // req.session['userid'] = dataw.userid
           dataw.msg = '登录成功'
           dataw.status = 1
           res.send(dataw).end()
         } else {
-          res.send({ 'msg': '密码不正确', 'status': -2 }).end()
+          res.send({ 'msg': '密码todo不正确', 'status': -2 }).end()
         }
       }
     }

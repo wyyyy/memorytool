@@ -9,6 +9,7 @@ var db = require('../libs/db')
 }) */
 const getHomeStr = `SELECT * FROM user`
 sc.get('/list', (req, res) => {
+  console.log('router.o' + 'user')
   console.log('eeee:' + moment().format())
   getHomeDatas(getHomeStr, req, res)
 })

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 var index = require('./routes/index')
 var users = require('./routes/users')
 var sc = require('./routes/sc')
+var session = require('express-session')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -13,6 +14,8 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+  console.log('to-do')
+  console.log('to-do')
   next()
   /* if (req.method === 'OPTIONS') {
     res.sendStatus(200)
@@ -41,5 +44,13 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+var sess = {
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {maxAge: 60 * 1000 * 30}
+}
+
+app.use(session(sess))
 // deal (cookie,session)
 module.exports = app
