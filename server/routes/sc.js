@@ -1,21 +1,38 @@
 var express = require('express')
 var moment = require('moment')
 var sc = express.Router()
-const mysql = require('mysql')
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'vhr'
-})
-// get homePage datasid,username,name,address,phone
+var dbpool = require('../libs/db.pool')
+var db = require('../libs/db')
+/* db.query('select * from user', [], function (results, fields) {
+  console.log(results)
+  console.log(fields)
+}) */
 const getHomeStr = `SELECT * FROM user`
 sc.get('/list', (req, res) => {
-  let mId = req.query.pageSize
-  console.log(moment().format() + mId)
+  console.log('eeee:' + moment().format())
   getHomeDatas(getHomeStr, req, res)
 })
-
+sc.get('/list/detail', (req, res) => {
+  console.log('eeee:' + moment().format())
+  getHomeDatasDetail(getHomeStr, req, res)
+})
+function getHomeDatasDetail (strGetDetail, req, res) {
+  strGetDetail = `SELECT * FROM user where id= `
+  let uid = req.query.id
+  strGetDetail = (getHomeStr + uid)
+  dbpool.query(strGetDetail, (err, data) => {
+    if (err) {
+      console.log(err)
+      res.status(500).send('database err').end()
+    } else {
+      if (data.length === 0) {
+        res.status(500).send('no datas').end()
+      } else {
+        res.send(data)
+      }
+    }
+  })
+}
 function getHomeDatas (getHomeStr, req, res) {
   let params = {
     pageSize: req.query.pageSize,

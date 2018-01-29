@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="search">
- <el-select v-model="value" placeholder="请选择">
+ <el-select v-model="value" placeholder="Pls Select">
     <el-option
       v-for="item in selectData"
       :key="item.value"
@@ -12,7 +12,7 @@
   <el-date-picker
       v-model="startDate"
       type="date"
-      placeholder="选择日期">
+      placeholder="Select Date">
     </el-date-picker>
   <el-button type="primary" v-on:click="search" :loading="loadingBtn">Search</el-button>
     </div>
@@ -52,6 +52,9 @@
     <el-table-column
       label="User ID"
       prop="id">
+      <router-link :to="'/list/detail' + id">
+                <span>{{msg}}</span>
+     </router-link>
     </el-table-column>
     <el-table-column
       label="Name"
@@ -78,7 +81,7 @@
       :page-sizes="[2,10, 20, 50, 60]"
       :page-size="pagesize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="0">
+      :total="ptotal">
     </el-pagination>
   </div>
   </div>
@@ -111,6 +114,7 @@ export default {
         label: '北京烤鸭'
       }],
       value: '',
+      ptotal: 0,
       currentPage: 0,
       pagesize: 2,
       currentPage3: 5,
@@ -126,19 +130,25 @@ export default {
     }
   },
   methods: {
+    changePage: function () {
+      this.currentPage = 1
+      this.ptotal = 0
+      console.log('change total' + this.ptotal)
+    },
     search: function (event) {
       var _this = this
       _this.loadingBtn = true
       let params = {
-        pageSize: this.pagesize,
-        pageIndex: this.currentPage,
-        loginP3awd: this.currentPage
+        pageSize: _this.pagesize,
+        pageIndex: _this.currentPage,
+        loginP3awd: _this.currentPage
       }
       console.log(params)
       this.$http.get('/sc/list', {params: params})
         .then(function (response) {
           console.log(response.data.length + 'response')
           console.log(_this.tableData = response.data)
+          _this.changePage()
         })
         .catch(function (error) {
           console.log('error:' + error)

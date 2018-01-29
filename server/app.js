@@ -20,7 +20,6 @@ app.all('*', function (req, res, next) {
   } else {
     next()
   } */
-  console.log('server.*')
 })
 app.use('/', index)
 app.use('/users', users)

@@ -1,5 +1,5 @@
 'use strict'
-exports.mysql = {
+module.exports = {
   // 单数据库信息配置
   client: {
     // host

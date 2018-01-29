@@ -33,7 +33,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes
 })
-// 登录中间验证，页面需要登录而没有登录的情况直接跳转登录
+// 登录中间验证，页面需要登录而没有登录的情况直接跳转登录http://blog.csdn.net/qq673318522/article/details/55506650
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.state.userInfo.user_id) {
