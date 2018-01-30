@@ -5,14 +5,13 @@ const common = require('../libs/common')
 var db = require('../libs/db')
 /* GET users listing. */
 users.get('/', function (req, res, next) {
+  console.log('router/users.js./')
   var user = req.session.user
   console.log('router.o' + user)
-  next()
 })
 users.get('/login', function (req, res, next) {
   var user = req.session.user
-  console.log('router.o' + user)
-  next()
+  console.log('router/users.js./login.o' + user)
 })
 /*
      *user reg func
@@ -46,8 +45,8 @@ users.post('/login', (req, res) => {
   let mObj = {}
   for (let obj in req.body) {
     mObj = JSON.parse(obj)
-    console.log(mObj)
   }
+  console.log(req.session)// 打印session的值
   console.log(mObj.loginPawd)
   let username = mObj.loginName
   let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE)
@@ -55,7 +54,6 @@ users.post('/login', (req, res) => {
   console.log(selectUser)
   db.query(selectUser, (err, data) => {
     if (err) {
-      console.log('todo' + err)
       res.send({ 'msg': '服务器出错', 'status': 0 }).end()
     } else {
       if (data.length === 0) {
@@ -65,8 +63,10 @@ users.post('/login', (req, res) => {
         // login sucess
         if (dataw.password === password) {
           // save the session
-          // req.session['userid'] = dataw.userid
-          dataw.msg = '登录成功'
+          // req.session.userinfo = dataw
+          console.log(req.session)
+          console.log('Login success')
+          dataw.msg = 'Login success'
           dataw.status = 1
           res.send(dataw).end()
         } else {

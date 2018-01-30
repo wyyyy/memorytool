@@ -29,5 +29,20 @@ axiosWrap.interceptors.response.use((result) => {
 }, result => {
   return Promise.reject(result)
 })
+export function fetch(url,params){
+  return new Promise((resolve,reject)=>{
+    axios.post(url,params)
+    .then(response=>{resolve(response.data)})
+    .catch((error)=>{reject(error)})
 
+  })
+}
 export default axiosWrap
+/*export default{
+  mineBasemsgApi(){
+    return fetch('/api/getBoardList')
+  },
+  comonApi(url,params){
+    return fetch(url,params)
+  }
+}*/

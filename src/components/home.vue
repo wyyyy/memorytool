@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <router-link :to="'/city/' + guessCityid" class="guess_city">
+    <router-link :to="'/city/' + 2" class="guess_city">
                 <span>{{msg}}</span>
      </router-link>
      <router-link :to="'/sc/'">
@@ -8,6 +8,9 @@
      </router-link>
       <router-link :to="'/login/'">
                 <span>Login</span>
+     </router-link>
+      <router-link :to="'/tam/'">
+                <span>tamtamtamtam</span>
      </router-link>
      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">
@@ -22,16 +25,16 @@
     <el-menu-item index="2-3">选项3</el-menu-item>
   </el-submenu>
   <el-menu-item index="3">
-    <router-link :to="'/login/'">
-        <span>{{login}}</span>
-    </router-link>
   </el-menu-item>
 </el-menu>
+<myheader></myheader>
   </div>
 </template>
 
 <script>
+import myheader from './my-header.vue'
 export default {
+  components: {myheader},
   name: 'home',
   data () {
     return {

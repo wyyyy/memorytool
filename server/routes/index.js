@@ -9,14 +9,14 @@ const db = mysql.createPool({
 })
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  console.log('router.o')
+  console.log('router/index.js')
   var user = req.session.user
   console.log('router.o' + user)
   res.render('index', { title: 'Express' })
 })
 router.get('/login', function (req, res, next) {
   var user = req.session.user
-  console.log('router.o' + user)
+  console.log('router/index.js.login' + user)
   next()
 })
 // get homePage datas

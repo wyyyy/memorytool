@@ -1,8 +1,9 @@
 import getters from './getter.js'
 const state = {
   isShow: true,
+  token: null,
   isNavShow: true,
-  userInfo: {}
+  userInfo: { }
 }
 const mutations = {
   showLoading: (state) => {

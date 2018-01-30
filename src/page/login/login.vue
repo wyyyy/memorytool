@@ -35,6 +35,9 @@
 <script>
 export default {
   name: 'login',
+  created () {
+    console.log('created+get')
+  },
   data () {
     return {
       placestr: 'Pls input the username',
@@ -42,6 +45,7 @@ export default {
         username: 'admin',
         password: 'admin'
       },
+      userInfo: {},
       info: '',
       rules: {
         username: [
@@ -57,19 +61,27 @@ export default {
   methods: {
     onSubmit () {
       var _this = this
-      console.log('lgo login submit')
-      console.log(this.form.username)
       let params = {
         loginName: this.form.username,
         loginPawd: this.form.password
       }
       this.$http
         .post('/users/login', params)
-        .then(function (response) {
-          console.log(response.data)
-          let expireDays = 1000 * 60 * 60 * 24 * 15
-          _this.setCookie('session', response.data.session, expireDays)
-          _this.$router.push('/home')
+        .then(function (res) {
+          if (res.status === 200) {
+          }
+          _this.userInfo = res.data
+          console.log(_this.userInfo + '--88')
+          window.sessionStorage.userInfo = JSON.stringify(_this.userInfo)
+          console.log(_this.$store)
+          _this.$store.dispatch('setUserInfo', _this.userInfo)
+          let redirect = decodeURIComponent(_this.$route.query.redirect || '/')
+          let redirect1 = '/sc'
+          _this.$router.push({
+            path: redirect1
+          })
+          console.log('post-login:redirect' + redirect)
+          console.log('----------login-sucess--' + res.data.username)
         })
         .catch(function (error) {
           console.log(error)
