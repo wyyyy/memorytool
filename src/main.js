@@ -31,6 +31,8 @@ Vue.prototype.$http = axios// 处理刷新的时候vuex被清空但是用户已�
 if (window.sessionStorage.userInfo) {
   console.log('store.dispatch')
   store.dispatch('setUserInfo', JSON.parse(window.sessionStorage.userInfo))
+} else {
+  console.log('store.dispatch--false')
 }
 const router = new VueRouter({
   routes
@@ -40,10 +42,11 @@ const router = new VueRouter({
 // http://blog.csdn.net/qq673318522/article/details/55506650
 router.beforeEach((to, from, next) => {
   console.log('1' + store.state)
-  console.log(store.state)
-  console.log(store.actions)
+  console.log(store.state.userInfo)
+  console.log(store.getters.getUserInfo)
   if (to.matched.some(record => record.meta.requireAuth)) {
-    if (store.state.userInfo.userid) {
+    console.log('end')
+    if (store.state.userInfo) {
       next()
     } else {
       next({

@@ -3,7 +3,7 @@ const state = {
   isShow: true,
   token: null,
   isNavShow: true,
-  userInfo: { }
+  userInfo: {userid: '0'}
 }
 const mutations = {
   showLoading: (state) => {

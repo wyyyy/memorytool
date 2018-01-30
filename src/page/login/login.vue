@@ -45,7 +45,7 @@ export default {
         username: 'admin',
         password: 'admin'
       },
-      userInfo: {},
+      userInfo: {userid: '0'},
       info: '',
       rules: {
         username: [
@@ -71,10 +71,11 @@ export default {
           if (res.status === 200) {
           }
           _this.userInfo = res.data
-          console.log(_this.userInfo + '--88')
+          console.log(_this.userInfo.userid + '--88')
           window.sessionStorage.userInfo = JSON.stringify(_this.userInfo)
-          console.log(_this.$store)
-          _this.$store.dispatch('setUserInfo', _this.userInfo)
+          console.log(_this.userInfo)
+          // _this.$store.dispatch('setUserInfo', _this.userInfo)
+          _this.$store.state.userInfo = _this.userInfo
           let redirect = decodeURIComponent(_this.$route.query.redirect || '/')
           let redirect1 = '/sc'
           _this.$router.push({
