@@ -11,10 +11,7 @@ export default {
   hideNav: ({ commit }) => {
     commit('hideNav')
   },
-  setUserInfo: ({
-    commit,
-    userInfo
-  }) => {
+  setUserInfo: ({ commit, userInfo }) => {
     commit('setUserInfo', userInfo)
   }
 }

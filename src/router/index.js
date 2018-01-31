@@ -15,14 +15,17 @@ export default [{
 },
 {
   path: '/sc',
-  name: 'sc',
+  name: 'TOCD',
   meta: {
-    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+    requireAuth: true
   },
   component: sc
 },
 {
   path: '/home',
+  meta: {
+    requireAuth: true
+  },
   component: home
 },
 {

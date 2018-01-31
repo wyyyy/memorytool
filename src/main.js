@@ -5,7 +5,7 @@ import routes from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
-import store from './store/index'
+import store from './store/store'
 import api from './api/api'
 Vue.prototype.$api = api
 Vue.use(ElementUI)
@@ -29,7 +29,7 @@ axios.defaults.baseURL = 'http://localhost:3000/'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$http = axios// 处理刷新的时候vuex被清空但是用户已经登录的情况
 if (window.sessionStorage.userInfo) {
-  console.log('store.dispatch')
+  console.log('store.dispatch-' + JSON.parse(window.sessionStorage.userInfo))
   store.dispatch('setUserInfo', JSON.parse(window.sessionStorage.userInfo))
 } else {
   console.log('store.dispatch--false')
@@ -41,12 +41,12 @@ const router = new VueRouter({
 // 登录中间验证，页面需要登录而没有登录的情况直接跳转登录
 // http://blog.csdn.net/qq673318522/article/details/55506650
 router.beforeEach((to, from, next) => {
-  console.log('1' + store.state)
-  console.log(store.state.userInfo)
-  console.log(store.getters.getUserInfo)
+  console.log('1to.fullPath' + to.fullPath)
+  console.log('2from.fullPath' + from.fullPath)
+  console.log('3' + store.state)
   if (to.matched.some(record => record.meta.requireAuth)) {
-    console.log('end')
     if (store.state.userInfo) {
+      console.log('end')
       next()
     } else {
       next({

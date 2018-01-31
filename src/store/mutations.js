@@ -3,7 +3,7 @@ const state = {
   isShow: true,
   token: null,
   isNavShow: true,
-  userInfo: {userid: '0'}
+  userInfo: {}
 }
 const mutations = {
   showLoading: (state) => {
@@ -28,3 +28,7 @@ export default {
   state,
   mutations
 }
+/*
+改变state的数值的方法，写在mutations 同步
+Vuex提供了commit方法来修改状态
+*/
