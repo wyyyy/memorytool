@@ -29,8 +29,8 @@ axios.defaults.baseURL = 'http://localhost:3000/'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$http = axios// 处理刷新的时候vuex被清空但是用户已经登录的情况
 if (window.sessionStorage.userInfo) {
-  console.log('store.dispatch-' + JSON.parse(window.sessionStorage.userInfo))
-  store.dispatch('setUserInfo', JSON.parse(window.sessionStorage.userInfo))
+  // console.log('store.dispatch-' + JSON.parse(window.sessionStorage.userInfo))
+  // store.dispatch('setUserInfo', JSON.parse(window.sessionStorage.userInfo))
 } else {
   console.log('store.dispatch--false')
 }
@@ -41,9 +41,10 @@ const router = new VueRouter({
 // 登录中间验证，页面需要登录而没有登录的情况直接跳转登录
 // http://blog.csdn.net/qq673318522/article/details/55506650
 router.beforeEach((to, from, next) => {
-  console.log('1to.fullPath' + to.fullPath)
-  console.log('2from.fullPath' + from.fullPath)
-  console.log('3' + store.state)
+  let myuserInfo = {}
+  myuserInfo = store.state.usersModule.userInfo
+  console.log('7-' + myuserInfo.username)
+  console.log('get more datea')
   if (to.matched.some(record => record.meta.requireAuth)) {
     if (store.state.userInfo) {
       console.log('end')

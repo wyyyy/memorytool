@@ -23,9 +23,6 @@ export default [{
 },
 {
   path: '/home',
-  meta: {
-    requireAuth: true
-  },
   component: home
 },
 {

@@ -12,6 +12,7 @@
       <router-link :to="'/tam/'">
                 <span>tamtamtamtam</span>
      </router-link>
+     <el-button type="primary" @click="onSubmit" v-if="Logined">Quite</el-button>
      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">
 <router-link :to="'/sc/'">
@@ -38,15 +39,31 @@ export default {
   name: 'home',
   data () {
     return {
+      isLogin: false,
       activeIndex: '1',
       msg: 'home',
+      userInfo: {},
       scource: 'SC-MAIN'
+    }
+  },
+  computed: {
+    Logined: function () {
+      var _this = this
+      let userInfo = {}
+      console.log('------------computed--start----------------')
+      console.log(_this.$store.state.usersModule.isLogin)
+      console.log('wode-------------' + userInfo.userid)
+      console.log('computed' + 'arry')
+      var isLogin=_this.$store.state.usersModule.isLogin
+      return isLogin
     }
   },
   methods: {
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
-    }
+    },
+    onSubmit () {}
+
   }
 }
 </script>

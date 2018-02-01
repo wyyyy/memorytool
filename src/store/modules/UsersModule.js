@@ -1,44 +1,54 @@
-import Vue from 'vue'
-
+import * as types from '../mutation-types'
 export default {
   state: {
+    userInfo: {
+      username: 'my',
+      userid: '0'},
+    isLogin: false,
+    tocken: '',
     currentUser: {
       get UserName () {
-        return localStorage.getItem('currentUser_name')
+        return localStorage.getItem('currentUserName')
       },
       get UserToken () {
-        return localStorage.getItem('currentUser_token')
+        return localStorage.getItem('currentUserToken')
       }
     }
   },
   mutations: {
-    setUser (state, {username, usertoken}) {
-      // 在这里把用户名和token保存起来
-      localStorage.setItem('currentUser_name', username)
-      localStorage.setItem('currentUser_token', usertoken)
+    mLogin (state) {
+      state.isLogin = true
+      let user = JSON.parse(sessionStorage.getItem('userInfo'))
+      state.loginUser.UserName = user.UserName
+      state.loginUser.userId = user.userId
+    },
+    mLogout (state) {
+      state.isLogin = false
+      state.loginUser.UserName = ''
+      state.loginUser.userId = ''
+    },
+    [types.SET_USER] (state, { userinfo }) {
+      state.userInfo = userinfo
+    },
+    setUserInfo (state, userInfo) {
+      window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+      state.userInfo = userInfo
+      state.isLogin = true
+      console.log('-setUserInfo.setuerinfo:' + userInfo)
     }
   },
   actions: {
-    userLogin (context, {username, userpass}) {
-      // 发送get请求做权限认证(真实开发建议用post的方式)
-      let url = 'http://localhost/yiiserver/web/index.php/token?client_appid=' + user_name + '&client_appkey=' + user_pass
-      console.log(url)
-
-      Vue.http.get(url)
-        .then((res) => {
-          if (res != null && res.body != undefined && 'access-token' in res.body) {
-            var token = res.body['access-token']
-            if (token != '') {
-              // 后端API验证通过
-              // 调用上面mutations里定义的方法
-              context.commit('setUser', {'user_name': user_name, 'user_token': token})
-            }
-          } else {
-            alert('用户名密码错误')
-          }
-        }, (res) => {
-          alert('请求失败进入这里')
-        })
+    aLogin ({ commit }) {
+      console.log('we execute the actions user-module-actions')
+      commit('mLogin')
+    },
+    aLogout ({ commit }) {
+      commit('mLogout')
+    },
+    userLogin ({ commit, state }, userInfo) {
+      console.log('user-module-actions')
+      console.log(userInfo)
+      state.userInfo = userInfo.form
     }
   }
 }

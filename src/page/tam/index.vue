@@ -1,14 +1,18 @@
 <template>
-  <div>index page</div>
+  <div id="a3pp">
+    <h1>Shopping Cart Example</h1>
+    <hr>
+    <h2>Products</h2>
+    <ProductList/>
+    <hr>
+    <ShoppingCart/>
+  </div>
 </template>
 
 <script>
+import ProductList from './ProductList.vue'
+import ShoppingCart from './ShoppingCart.vue'
 export default {
-  created () {
-    this.$api.get('topics', null, r => {
-      console.log(r)
-      console.log(r.data)
-    })
-  }
+  components: { ProductList, ShoppingCart }
 }
 </script>

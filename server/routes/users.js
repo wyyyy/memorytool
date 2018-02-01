@@ -61,6 +61,8 @@ users.post('/login', (req, res) => {
       } else {
         let dataw = data[0]
         // login sucess
+        console.log(dataw.password)
+        console.log(password)
         if (dataw.password === password) {
           // save the session
           // req.session.userinfo = dataw
