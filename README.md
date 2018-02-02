@@ -41,3 +41,5 @@ bcrypt: 对用户密码进行hash加密
 服务端收到请求后，验证Token的合法性，合法就返回客户端所需数据，反之，返回验证失败的信息
 
 https://www.cnblogs.com/hlere/p/6668159.html?utm_source=itdadao&utm_medium=referral
+https://github.com/Nicksapp/nAuth-restful-api
+http://www.passportjs.org/docs/authenticate/
