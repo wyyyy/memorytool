@@ -29,6 +29,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   name: 'login',
   created () {
@@ -81,8 +82,9 @@ export default {
           }
           console.log(res.data)
           _this.userInfo = res.data
-          console.log('oogin-'+ res.data)
-          _this.$store.commit('setUserInfo', (_this.userInfo))
+          console.log('oogin-' + _this.userInfo)
+          console.log(_this.userInfo)
+          _this.$store.commit(types.SET_USER, (_this.userInfo))
           let redirect = decodeURIComponent(_this.$route.query.redirect || '/')
           _this.$router.push({
             path: redirect

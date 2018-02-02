@@ -52,8 +52,8 @@
     <el-table-column
       label="User ID"
       prop="id">
-      <router-link :to="'/list/detail' + id">
-                <span>{{msg}}</span>
+      <router-link :to="'/list/detail' + 'id'">
+                <span>detail</span>
      </router-link>
     </el-table-column>
     <el-table-column
@@ -138,7 +138,10 @@ export default {
     search: function (event) {
       var _this = this
       _this.loadingBtn = true
+      let accessToken = _this.$store.state.usersModule.token
+      console.log(accessToken)
       let params = {
+        accessToken: accessToken,
         pageSize: _this.pagesize,
         pageIndex: _this.currentPage,
         loginP3awd: _this.currentPage

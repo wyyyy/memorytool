@@ -1,19 +1,27 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser') // 解析body字段模块
 // const cookieParser = require('cookie-parser')
 // const cookieSession = require('cookie-session')
 var index = require('./routes/index')
 var users = require('./routes/users')
 var sc = require('./routes/sc')
 var session = require('express-session')
+const morgan = require('morgan') // 命令行log显示
+const passport = require('passport')// 用户认证模块passport
 
 const app = express()
+app.use(passport.initialize())// 初始化passport模块
+app.use(morgan('dev'))// 命令行中显示程序运行日志,便于bug调试
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json()) // 调用bodyParser模块以便程序正确解析body传入值
 // the cores config
 app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+  var url = req.originalUrl
+  console.log(url)
+  // req.session.user
   next()
   /* if (req.method === 'OPTIONS') {
     res.sendStatus(200)

@@ -36,10 +36,12 @@ function getHomeDatasDetail (strGetDetail, req, res) {
 }
 function getHomeDatas (getHomeStr, req, res) {
   let params = {
+    accessToken: req.query.accessToken,
     pageSize: req.query.pageSize,
     pageIndex: req.query.pageIndex,
     loginP3awd: req.query.pageIndex
   }
+  console.log('get token')
   let pageSize = req.query.pageSize
   let pageIndex = req.query.pageIndex
   getHomeStr = `SELECT * FROM user limit `

@@ -49,8 +49,8 @@ const routes = [{
 }
 ]
 // 页面刷新时，重新赋值token
-if (window.localStorage.getItem('token')) {
-  store.commit(types.LOGIN, window.localStorage.getItem('token'))
+if (window.localStorage.getItem('userInfo')) {
+  store.commit(types.SET_USER, window.localStorage.getItem('userInfo'))
 }
 
 const router = new VueRouter({
@@ -58,8 +58,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('here')
   if (to.matched.some(r => r.meta.requireAuth)) {
-    if (store.state.token) {
+    if (store.state.usersModule.token) {
+      console.log('we have token')
       next()
     } else {
       next({

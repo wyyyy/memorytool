@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
   console.log('router/index.js')
   var user = req.session.user
   console.log('router.o' + user)
+  // res.json({ message: 'hello index!'})
   res.render('index', { title: 'Express' })
 })
 router.get('/login', function (req, res, next) {
