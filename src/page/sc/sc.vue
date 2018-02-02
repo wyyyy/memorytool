@@ -135,6 +135,16 @@ export default {
       this.ptotal = 0
       console.log('change total' + this.ptotal)
     },
+    getUserAccount: function () {
+      var _this = this
+      console.log('sql1')
+      console.log(_this)
+      return this.$http.get('/sc/list')
+    },
+    getUserPermissions: function () {
+      console.log('sql2')
+      return this.$http.get('/sc/list')
+    },
     search: function (event) {
       var _this = this
       _this.loadingBtn = true
@@ -146,6 +156,11 @@ export default {
         pageIndex: _this.currentPage,
         loginP3awd: _this.currentPage
       }
+      this.$http.all([this.getUserAccount(), this.getUserPermissions()])
+        .then(this.$http.spread(function (acct, perms) {
+          //
+          console.log('two sql')
+        }))
       console.log(params)
       this.$http.get('/sc/list', {params: params})
         .then(function (response) {
