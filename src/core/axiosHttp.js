@@ -1,48 +1,44 @@
 import axios from 'axios'
+import store from '@/store/store'
+import router from '@/router/router'
+import { baseUrl } from '../config/env'
+import * as types from '../store/mutation-types'
 
-/* 创建一个新的 AXIOS 对象，确保原有的对象不变 */
-let axiosWrap = axios.create({
-  baseURL: 'http://localhost:3000/',
-  headers: {
-    /* 一些公用的 header */
-    'token': 'appInfo.token'
+// axios 配置
+axios.defaults.timeout = 5000
+axios.defaults.baseURL = baseUrl
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+
+// http request 拦截器
+axios.interceptors.request.use(
+  config => {
+    if (store.state.token) {
+      config.headers.Authorization = `token ${store.state.token}`
+    }
+    return config
   },
-  transformRequest: [function (data, header) {
-    /* 自定义请求参数解析方式（如果必要的话） */
-  }],
-  paramsSerializer: function (params) {
-    /* 自定义链接参数解析方式（如果必要的话） */
-  }
-})
-
-/* 过滤请求 */
-axiosWrap.interceptors.request.use((config) => {
-  return config
-})
-/* 过滤响应 */
-axiosWrap.interceptors.response.use((result) => {
-  /* 假设当code为0时代表响应成功 */
-  if (result.data.code !== 0) {
-    return Promise.reject(result)
-  }
-  return result.data.data
-}, result => {
-  return Promise.reject(result)
-})
-export function fetch(url,params){
-  return new Promise((resolve,reject)=>{
-    axios.post(url,params)
-    .then(response=>{resolve(response.data)})
-    .catch((error)=>{reject(error)})
-
+  err => {
+    return Promise.reject(err)
   })
-}
-export default axiosWrap
-/*export default{
-  mineBasemsgApi(){
-    return fetch('/api/getBoardList')
+
+// http response 拦截器
+axios.interceptors.response.use(
+  response => {
+    return response
   },
-  comonApi(url,params){
-    return fetch(url,params)
-  }
-}*/
+  error => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          // 401 清除token信息并跳转到登录页面
+          store.commit(types.LOGOUT)
+          router.replace({
+            path: 'login',
+            query: {redirect: router.currentRoute.fullPath}
+          })
+      }
+    }
+    return Promise.reject(error.response.data)
+  })
+
+export default axios

@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+import store from '@/store/store'
+import * as types from '@/store/mutation-types'
 import home from '@/components/home'
 const login = r => require.ensure([], () => r(require('../page/login/login')), 'login')
 const reg = r => require.ensure([], () => r(require('../page/login/reg')), 'reg')
@@ -7,9 +9,9 @@ const sc = r => require.ensure([], () => r(require('../page/sc/sc')), 'sc')
 const tam = r => require.ensure([], () => r(require('../page/tam/index')), 'tam')
 const page = r => require.ensure([], () => r(require('@/components/page')), 'page')
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default [{
+const routes = [{
   path: '',
   redirect: '/home'
 },
@@ -46,3 +48,28 @@ export default [{
   component: page
 }
 ]
+// 页面刷新时，重新赋值token
+if (window.localStorage.getItem('token')) {
+  store.commit(types.LOGIN, window.localStorage.getItem('token'))
+}
+
+const router = new VueRouter({
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(r => r.meta.requireAuth)) {
+    if (store.state.token) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

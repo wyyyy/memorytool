@@ -54,7 +54,7 @@ export default {
       console.log(_this.$store.state.usersModule.isLogin)
       console.log('wode-------------' + userInfo.userid)
       console.log('computed' + 'arry')
-      var isLogin=_this.$store.state.usersModule.isLogin
+      var isLogin = _this.$store.state.usersModule.isLogin
       return isLogin
     }
   },
