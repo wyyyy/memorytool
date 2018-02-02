@@ -30,11 +30,21 @@ export default {
     [types.SET_USER] (state, { userinfo }) {
       state.userInfo = userinfo
     },
-    setUserInfo (state, userInfo) {
-      window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+    setUser (state, {userInfo, userToken}) {
+      localStorage.setItem('currentUserName', userInfo)
+      localStorage.setItem('currentUserToken', userToken)
+    },
+    setUserInfo (state, {userInfo}) {
+      console.log('setuerinfo-tore-2018')
+      console.log(userInfo)
+      console.log(typeof userInfo)
+      console.log('-----end--------')
       state.userInfo = userInfo
+      state.tocken = userInfo.tocken
       state.isLogin = true
+      window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
       console.log('-setUserInfo.setuerinfo:' + userInfo)
+      window.sessionStorage.setItem('currentUserToken', state.tocken)
     }
   },
   actions: {

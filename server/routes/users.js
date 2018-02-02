@@ -46,7 +46,7 @@ users.post('/login', (req, res) => {
   for (let obj in req.body) {
     mObj = JSON.parse(obj)
   }
-  console.log(req.session)// 打印session的值
+  console.log(req.session)
   console.log(mObj.loginPawd)
   let username = mObj.loginName
   let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE)
@@ -70,9 +70,13 @@ users.post('/login', (req, res) => {
           console.log('Login success')
           dataw.msg = 'Login success'
           dataw.status = 1
-          res.send(dataw).end()
+          dataw.data = 'admin'
+          dataw.token = 'i am token'
+          // user.token = jwt.sign(user, process.env.JWT_SECRET)
+          console.log(dataw)
+          res.json(dataw)
         } else {
-          res.send({ 'msg': '密码todo不正确', 'status': -2 }).end()
+          res.json({ 'msg': '密码todo不正确', 'status': -2 })
         }
       }
     }

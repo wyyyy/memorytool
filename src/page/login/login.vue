@@ -79,14 +79,14 @@ export default {
           if (res.status === 200) {
             console.log('res.status:' + res.status)
           }
+          console.log(res.data)
           _this.userInfo = res.data
-          // window.sessionStorage.setItem('userInfo', JSON.stringify(_this.userInfo))
+          console.log('oogin-'+ res.data)
           _this.$store.commit('setUserInfo', (_this.userInfo))
           let redirect = decodeURIComponent(_this.$route.query.redirect || '/')
           _this.$router.push({
             path: redirect
           })
-          console.log('router from:' + redirect)
         })
         .catch(function (error) {
           console.log(error)
