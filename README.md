@@ -43,4 +43,11 @@ bcrypt: 对用户密码进行hash加密
 https://www.cnblogs.com/hlere/p/6668159.html?utm_source=itdadao&utm_medium=referral
 https://github.com/Nicksapp/nAuth-restful-api
 http://www.passportjs.org/docs/authenticate/
-https://www.kancloud.cn/yunye/axios/234845
+response.writeHead(200, { 'Content-Type': 'application/json' });
+    // response.write('Hello from out application');
+    var myObj = {
+        name: "hfpp2012",
+        job: "programmer",
+        age: 27
+    };
+    response.end(JSON.stringify(myObj));
