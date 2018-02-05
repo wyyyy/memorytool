@@ -22,9 +22,9 @@ HttpWrapper.wrapReqParams = function (req, obj) {
  * 包装返回参数；重复的参数将覆盖；
  * obj类型错误，并不会抛出异常
  */
-HttpWrapper.wrapRenderParams = function (render_params, obj) {
+HttpWrapper.wrapRenderParams = function (renderParams, obj) {
   if (!CommonUtil.isObjEmpty(obj)) {
-    for (var p in obj)render_params[p] = obj[p]
+    for (var p in obj)renderParams[p] = obj[p]
   }
-  return render_params
+  return renderParams
 }

@@ -5,13 +5,25 @@ import { baseUrl } from '../config/env'
 import * as types from '../store/mutation-types'
 import qs from 'qs'
 
+let axiosHttp = axios.create({
+  baseURL: baseUrl,
+  timeout: 5000,
+  headers: {
+    /* 一些公用的 header */
+    'token': 'appInfo.token'
+  },
+  transformRequest: [function (data, header) {
+    /* 自定义请求参数解析方式（如果必要的话） */
+  }],
+  paramsSerializer: function (params) {
+    /* 自定义链接参数解析方式（如果必要的话） */
+  }
+})
 // axios 配置
-axios.defaults.timeout = 5000
-axios.defaults.baseURL = baseUrl
-axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+axiosHttp.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
 // http request 拦截器
-axios.interceptors.request.use(
+axiosHttp.interceptors.request.use(
   config => {
     if (store.state.token) {
       config.headers.Authorization = `token ${store.state.token}`
@@ -26,7 +38,7 @@ axios.interceptors.request.use(
   })
 
 // http response 拦截器
-axios.interceptors.response.use(
+axiosHttp.interceptors.response.use(
   response => {
     return response
   },
@@ -53,7 +65,7 @@ axios.interceptors.response.use(
 
 export function fetch (url, params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(url, {
+    axiosHttp.get(url, {
       params: params
     })
       .then(response => {
@@ -74,7 +86,7 @@ export function fetch (url, params = {}) {
 
 export function post (url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios.post(url, data)
+    axiosHttp.post(url, data)
       .then(response => {
         resolve(response.data)
       }, err => {
@@ -92,7 +104,7 @@ export function post (url, data = {}) {
 
 export function patch (url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios.patch(url, data)
+    axiosHttp.patch(url, data)
       .then(response => {
         resolve(response.data)
       }, err => {
@@ -110,7 +122,7 @@ export function patch (url, data = {}) {
 
 export function put (url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios.put(url, data)
+    axiosHttp.put(url, data)
       .then(response => {
         resolve(response.data)
       }, err => {
@@ -118,4 +130,4 @@ export function put (url, data = {}) {
       })
   })
 }
-export default axios
+export default axiosHttp
