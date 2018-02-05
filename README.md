@@ -51,3 +51,5 @@ response.writeHead(200, { 'Content-Type': 'application/json' });
         age: 27
     };
     response.end(JSON.stringify(myObj));
+master:all in 
+devfetch:fetch

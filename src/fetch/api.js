@@ -33,9 +33,11 @@ export function fetch (url, params) {
     axios.get(url, params)
       .then(response => {
         console.log('fetch/api')
+        console.log(response.data)
         resolve(response.data)
       }, err => {
-        console.log('fetch/api')
+        console.log('fetch/api/error')
+        console.log(err)
         reject(err)
       })
       .catch((error) => {
