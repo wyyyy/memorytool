@@ -130,6 +130,9 @@ export default {
     }
   },
   methods: {
+    async initData () {
+
+    },
     changePage: function () {
       this.currentPage = 1
       this.ptotal = 0

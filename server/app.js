@@ -8,7 +8,7 @@ var sc = require('./routes/sc')
 var session = require('express-session')
 const morgan = require('morgan') // 命令行log显示
 const passport = require('passport')// 用户认证模块passport
-
+var jwt = require('jsonwebtoken')// 用来创建和确认用户信息摘要
 const app = express()
 app.use(passport.initialize())// 初始化passport模块
 app.use(morgan('dev'))// 命令行中显示程序运行日志,便于bug调试
@@ -21,8 +21,30 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
   var url = req.originalUrl
   console.log(url)
+  console.log('检查post的信息或者url查询参数或者头信息')
+  // 检查post的信息或者url查询参数或者头信息
+  var token = req.body.token || req.query.token || req.headers['x-access-token']
   // req.session.user
-  next()
+  // 解析 token
+  if (token) {
+    // 确认token
+    jwt.verify(token, 'app.get(superSecret)', function (err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'token信息错误.' })
+      } else {
+        // 如果没问题就把解码后的信息保存到请求中，供后面的路由使用
+        req.api_user = decoded
+        console.dir(req.api_user)
+        next()
+      }
+    })
+  } else {
+    // 如果没有token，则返回错误
+    return res.status(403).send({
+      success: false,
+      message: '没有提供token！'
+    })
+  }
   /* if (req.method === 'OPTIONS') {
     res.sendStatus(200)
     // make the require of options turn back quickly/
@@ -60,3 +82,5 @@ var sess = {
 app.use(session(sess))
 // deal (cookie,session)
 module.exports = app
+// 只要参数有token或者头信息里有x-access-token，我们就认定它是一个api接口
+// 增加一个service层，把多个model的操作放到里面

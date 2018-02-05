@@ -3,7 +3,7 @@ import * as types from '../mutation-types'
 // initial state
 const state = {
   all: [],
-  userInfo { }
+  userInfo: { }
 }
 
 // getters
@@ -17,7 +17,13 @@ const actions = {
     shop.getProducts(products => {
       commit(types.RECEIVE_PRODUCTS, { products })
     })
-  }
+  },
+  "ADD" : function(store , param){
+    return new Promise(function(resolve, reject) {
+        store.commit('ADD',param)
+        resolve("ok");
+    })
+}
 }
 
 // mutations

@@ -3,6 +3,8 @@ var users = express.Router()
 const common = require('../libs/common')
 // var dbpool = require('../libs/db.pool')
 var db = require('../libs/db')
+var jws = require('jws')
+
 /* GET users listing. */
 users.get('/', function (req, res, next) {
   console.log('router/users.js./')
@@ -71,6 +73,9 @@ users.post('/login', (req, res) => {
           dataw.msg = 'Login success'
           dataw.status = 1
           dataw.data = 'admin'
+          var token = jwt.sign(user, 'app.get(superSecret)', {
+            'expiresInMinutes': 1440 // 设置过期时间
+          })
           dataw.token = 'i am token'
           // user.token = jwt.sign(user, process.env.JWT_SECRET)
           console.log(dataw)

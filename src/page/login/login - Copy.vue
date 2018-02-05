@@ -60,6 +60,9 @@ export default {
     }
   },
   methods: {
+    async initData(){
+
+    },
     onSubmit () {
       var _this = this
       let params = {
