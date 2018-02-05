@@ -11,7 +11,7 @@ Vue.prototype.$api = api
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 
-Vue.prototype.$http = axios// 处理刷新的时候vuex被清空但是用户已经登录的情况
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

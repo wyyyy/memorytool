@@ -3,14 +3,18 @@
     <router-link :to="'/city/' + 2" class="guess_city">
                 <span>{{msg}}</span>
      </router-link>
-     <router-link :to="'/sc/'">
+     <br><router-link :to="'/sc/'">
               <span>{{scource}}</span>
      </router-link>
-      <router-link :to="'/login/'">
+     <br> <router-link :to="'/login/'">
                 <span>Login</span>
      </router-link>
-      <router-link :to="'/tam/'">
+     <br> <router-link :to="'/tam/'">
                 <span>tamtamtamtam</span>
+     </router-link>
+     <br>
+     <router-link :to="'/pm/'">
+                <span>P-----M</span>
      </router-link>
      <el-button type="primary" @click="onSubmit" v-if="Logined">Quite</el-button>
      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">

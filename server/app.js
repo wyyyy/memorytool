@@ -5,6 +5,7 @@ const bodyParser = require('body-parser') // 解析body字段模块
 var index = require('./routes/index')
 var users = require('./routes/users')
 var sc = require('./routes/sc')
+var pm = require('./routes/pm')
 var session = require('express-session')
 const morgan = require('morgan') // 命令行log显示
 const passport = require('passport')// 用户认证模块passport
@@ -40,10 +41,11 @@ app.all('*', function (req, res, next) {
     })
   } else {
     // 如果没有token，则返回错误
-    return res.status(403).send({
+    /* return res.status(403).send({
       success: false,
       message: '没有提供token！'
-    })
+    }) */
+    next()
   }
   /* if (req.method === 'OPTIONS') {
     res.sendStatus(200)
@@ -55,6 +57,7 @@ app.all('*', function (req, res, next) {
 app.use('/', index)
 app.use('/users', users)
 app.use('/sc', sc)
+app.use('/pm', pm)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found')

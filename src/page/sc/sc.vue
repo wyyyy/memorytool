@@ -157,6 +157,8 @@ export default {
         accessToken: accessToken,
         pageSize: _this.pagesize,
         pageIndex: _this.currentPage,
+        mpn: _this.currentPage,
+        platform: _this.currentPage,
         loginP3awd: _this.currentPage
       }
       this.$http.all([this.getUserAccount(), this.getUserPermissions()])

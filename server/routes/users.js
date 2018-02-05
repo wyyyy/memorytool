@@ -69,7 +69,6 @@ users.post('/login', (req, res) => {
           // save the session
           // req.session.userinfo = dataw
           console.log(req.session)
-          console.log('Login success')
           dataw.msg = 'Login success'
           dataw.status = 1
           dataw.data = 'admin'
