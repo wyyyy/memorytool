@@ -1,5 +1,7 @@
 import shop from '../../api/shop'
 import api from '../../fetch/api'
+import {getAllProducts} from '@/api/getData'
+
 import * as types from '../mutation-types'
 // initial state
 const state = {
@@ -20,6 +22,18 @@ const actions = {
       .then(res => {
         commit(types.GET_SPORTS_DETAIL, res)
       })
+  },
+  async getAdminData ({commit}) {
+    try {
+      const res = await getAllProducts()
+      if (res.status === 1) {
+        commit('saveAdminInfo', res.data)
+      } else {
+        throw new Error(res)
+      }
+    } catch (err) {
+      console.log('您尚未登陆或者session失效')
+    }
   },
   getAllProducts ({ commit }) {
     shop.getProducts(products => {

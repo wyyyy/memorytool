@@ -3,10 +3,12 @@
     <h1>Shopping---pm--- Cart Example</h1>
     <hr>
       <el-button type="primary" v-on:click="search" :loading="loadingBtn">Search</el-button>
+      <el-button type="primary" v-on:click="submitForm('loginForm')" :loading="loadingBtn">Search</el-button>
   </div>
 </template>
 
 <script>
+import {getAllProducts} from '@/api/getData'
 export default {
   name: 'pm',
   beforeRouteEnter (to, from, next) {
@@ -17,6 +19,10 @@ export default {
   },
   data () {
     return {
+      loginForm: {
+        username: '',
+        password: ''
+      },
       activeIndex: '1',
       msg: 'home',
       loadingBtn: false,
@@ -25,7 +31,11 @@ export default {
   },
   methods: {
     async initData () {
-
+    },
+    async submitForm (formName) {
+      const res = await getAllProducts({user_name: this.loginForm.username, password: this.loginForm.password})
+      console.log('res.state')
+      console.log(res.state)
     },
     getDetailData (el) {
       let id = el.$route.params.id

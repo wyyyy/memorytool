@@ -1,4 +1,4 @@
-import fetch from '@/config/fetch'
+import fetch from '@/config/mfetch'
 
 /**
  * 登陆
@@ -17,6 +17,8 @@ export const signout = () => fetch('/admin/singout')
  */
 
 export const getAdminInfo = () => fetch('/admin/info')
+// get pm list
+export const getAllProducts = () => fetch('/pm/list')
 
 /**
  * api请求量
