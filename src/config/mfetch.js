@@ -26,7 +26,8 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
           resolve(response.data)
         })
         .catch(err => {
-          reject(err)
+          console.log(err)
+          // reject(err)
         })
     })
   } else if (type === 'POST') {
@@ -37,70 +38,6 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
         }, err => {
           reject(err)
         })
-    })
-  }
-
-  if (window.fetch && method === 'fetch') {
-    let requestConfig = {
-      credentials: 'include',
-      method: type,
-      headers: {
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000/users/login',
-        'Content-Type': 'application/json'
-      },
-      mode: 'cors',
-      cache: 'force-cache'
-    }
-
-    if (type === 'POST') {
-      console.log('fectch-post')
-      Object.defineProperty(requestConfig, 'body', {
-        value: JSON.stringify(data)
-      })
-    }
-
-    try {
-      const response = await fetch(url, requestConfig)
-      const responseJson = await response.json()
-      return responseJson
-    } catch (error) {
-      throw new Error(error)
-    }
-  } else {
-    return new Promise((resolve, reject) => {
-      console.log('window.fetch')
-      if (method === 'fetch') {
-        console.log('1*' + method)
-      } else {
-        console.log('2' + method)
-      }
-      let requestObj
-      if (window.XMLHttpRequest) {
-        requestObj = new XMLHttpRequest()
-      }
-      let sendData = ''
-      if (type === 'POST') {
-        sendData = JSON.stringify(data)
-      }
-
-      requestObj.open(type, url, true)
-      requestObj.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-      requestObj.send(sendData)
-
-      requestObj.onreadystatechange = () => {
-        if (requestObj.readyState === 4) {
-          if (requestObj.status === 200) {
-            let obj = requestObj.response
-            if (typeof obj !== 'object') {
-              obj = JSON.parse(obj)
-            }
-            resolve(obj)
-          } else {
-            reject(requestObj)
-          }
-        }
-      }
     })
   }
 }

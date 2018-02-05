@@ -13,8 +13,6 @@ export default {
   name: 'pm',
   beforeRouteEnter (to, from, next) {
     next((vm) => {
-      vm.detail = ''
-      vm.getDetailData(vm)
     })
   },
   data () {
@@ -35,7 +33,7 @@ export default {
     async submitForm (formName) {
       const res = await getAllProducts({user_name: this.loginForm.username, password: this.loginForm.password})
       console.log('res.state')
-      console.log(res.state)
+      console.log(res)
     },
     getDetailData (el) {
       let id = el.$route.params.id

@@ -23,7 +23,7 @@ app.all('*', function (req, res, next) {
   var url = req.originalUrl
   console.log(url)
   console.log('检查post的信息或者url查询参数或者头信息')
-  // 检查post的信息或者url查询参数或者头信息
+  // check post url headers
   var token = req.body.token || req.query.token || req.headers['x-access-token']
   // req.session.user
   // 解析 token

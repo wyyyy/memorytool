@@ -8,10 +8,6 @@ import qs from 'qs'
 let axiosHttp = axios.create({
   baseURL: baseUrl,
   timeout: 5000,
-  headers: {
-    /* 一些公用的 header */
-    'token': 'appInfo.token'
-  },
   transformRequest: [function (data, header) {
     /* 自定义请求参数解析方式（如果必要的话） */
   }],
