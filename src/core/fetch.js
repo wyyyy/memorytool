@@ -14,7 +14,7 @@ function checkStatus (response) {
   }
 }
 
-function checkCode (res) {
+/* function checkCode (res) {
   // 如果code异常(这里已经包括网络错误，服务器错误，后端抛出的错误)，可以弹出一个错误提示，告诉用户
   if (res.status === -404) {
     alert(res.msg)
@@ -23,11 +23,11 @@ function checkCode (res) {
     alert(res.data.error_msg)
   }
   return res
-}
+} */
 export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
   type = type.toUpperCase()
   url = baseUrl + url
-  console.log('data')
+  console.log('data--------------2018--------------------')
   console.log(data)
   let params = data
   console.log(params)
@@ -45,16 +45,11 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
   }
   if (type === 'GET') {
     return new Promise((resolve, reject) => {
-      axiosHttp.get(url, {
-        params: data
-      })
+      console.log('get-' + url)
+      axiosHttp.get(url, data)
         .then(response => {
           checkStatus(response)
           resolve(response.data)
-        })
-        .then(res => {
-          checkCode(res)
-          resolve(res)
         })
         .catch(err => {
           console.log(err)
@@ -63,9 +58,7 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
     })
   } else if (type === 'POST') {
     return new Promise((resolve, reject) => {
-      axiosHttp.post(url,
-        data
-      )
+      axiosHttp.post(url, data)
         .then(response => {
           console.log(response)
           resolve(response.data)

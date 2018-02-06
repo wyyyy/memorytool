@@ -3,12 +3,12 @@
     <h1>Shopping---pm--- Cart Example</h1>
     <hr>
       <el-button type="primary" v-on:click="search" :loading="loadingBtn">Search</el-button>
-      <el-button type="primary" v-on:click="submitForm('loginForm')" :loading="loadingBtn">Search</el-button>
+      <el-button type="primary" v-on:click="subinfos('loginForm')" :loading="loadingBtn">subinfos</el-button>
   </div>
 </template>
 
 <script>
-import {getAllProducts} from '@/api/getData'
+import {getAllProducts, getProductsDetail} from '@/api/pm'
 export default {
   name: 'pm',
   beforeRouteEnter (to, from, next) {
@@ -21,14 +21,48 @@ export default {
         username: '',
         password: ''
       },
+      ptotal: 0,
+      currentPage: 0,
+      pagesize: 2,
+      currentPage3: 5,
+      currentPage4: 4,
       activeIndex: '1',
       msg: 'home',
+      accessToken: 'token',
       loadingBtn: false,
       userInfo: {}
     }
   },
   methods: {
-    async initData () {
+    async content (formName) {
+      var _this = this
+      let params = {
+        accessToken: _this.accessToken,
+        pageSize: _this.pagesize,
+        pageIndex: _this.currentPage,
+        mpn: _this.currentPage,
+        platform: _this.currentPage,
+        loginP3awd: _this.currentPage
+      }
+      return getProductsDetail(params)
+    },
+    async page () {
+      var _this = this
+      let params = {
+        accessToken: _this.accessToken,
+        pageSize: _this.pagesize,
+        pageIndex: _this.currentPage,
+        mpn: _this.currentPage,
+        platform: _this.currentPage,
+        loginP3awd: _this.currentPage
+      }
+      return getAllProducts(params)
+    },
+    async subinfos (formName) {
+      Promise.all([this.content(), this.page()]).then(function (values) {
+        console.log('values')
+        console.log(values)
+      })
     },
     async submitForm (formName) {
       const res = await getAllProducts({user_name: this.loginForm.username, password: this.loginForm.password})
