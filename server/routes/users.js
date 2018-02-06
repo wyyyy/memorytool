@@ -12,8 +12,7 @@ users.get('/', function (req, res, next) {
   console.log('router.o' + user)
 })
 users.get('/login', function (req, res, next) {
-  var user = req.session.user
-  console.log('router/users.js./login.o' + user)
+  next()
 })
 /*
      *user reg func
@@ -44,41 +43,43 @@ function delReg (insUserInfo, res) {
 };
 
 users.post('/login', (req, res) => {
-  let mObj = {}
-  for (let obj in req.body) {
+  console.log(req)
+  /* for (let obj in req.body) {
     mObj = JSON.parse(obj)
-  }
-  console.log(req.session)
-  console.log(mObj.loginPawd)
-  let username = mObj.loginName
-  let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE)
+  } */
+  let username = req.body.loginName
+  let password = common.md5(req.body.loginPsd + common.MD5_SUFFXIE)
   const selectUser = `SELECT * FROM user where username='${username}'`
   console.log(selectUser)
   db.query(selectUser, (err, data) => {
     if (err) {
-      res.send({ 'msg': '服务器出错', 'status': 0 }).end()
+      res.json({ 'msg': '服务器出错', 'status': 0 })
     } else {
       if (data.length === 0) {
-        res.send({ 'msg': 'The user does not exist', 'status': -1 }).end()
+        res.json({ 'msg': 'The user does not exist', 'status': -1 })
       } else {
         let dataw = data[0]
         // login sucess
         console.log(dataw.password)
-        console.log(password)
         if (dataw.password === password) {
           // save the session
           // req.session.userinfo = dataw
-          console.log(req.session)
           dataw.msg = 'Login success'
           dataw.status = 1
           dataw.data = 'admin'
-          var token = jwt.sign(user, 'app.get(superSecret)', {
+          /* var token = jwt.sign(user, 'app.get(superSecret)', {
             'expiresInMinutes': 1440 // 设置过期时间
-          })
+          }) */
           dataw.token = 'i am token'
           // user.token = jwt.sign(user, process.env.JWT_SECRET)
-          console.log(dataw)
-          res.json(dataw)
+          var userinfo = {
+            'username': dataw.username,
+            'userid': dataw.userid,
+            'phone': dataw.phone
+          }
+          var mydata = { status: 1, data: userinfo }
+          console.log(mydata)
+          res.json(mydata)
         } else {
           res.json({ 'msg': '密码todo不正确', 'status': -2 })
         }

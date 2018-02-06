@@ -32,7 +32,8 @@ export default {
       localStorage.setItem('currentUserToken', userToken)
     },
     [types.SET_USER] (state, userInfo) {
-      let temp = userInfo.token
+      console.log('to-do')
+      let temp = 'userInfo.token'
       console.log(typeof userInfo)
       state.userInfo = userInfo
       state.token = temp
@@ -51,7 +52,7 @@ export default {
     },
     userLogin ({ commit, state }, userInfo) {
       console.log('user-module-actions')
-      console.log(userInfo)
+      console.log('actios')
       state.userInfo = userInfo.form
     }
   }

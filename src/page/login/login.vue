@@ -18,8 +18,7 @@
 </el-form>
 <p class="tip">温馨提示：</p>
 <div class="form-group">
-<el-button type="primary" @click="userLogin({loginForm})">Submit</el-button>
-<el-button type="primary" @click="onSubmit">onSubmit</el-button>
+<el-button type="primary" @click="submitForm({loginForm})">Submit</el-button>
 </div>
 <p class="tip">未登录过的新用户，自动注册</p>
 <p class="tip">注册过的用户可凭账号密码登录</p>
@@ -29,6 +28,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import {login} from '@/api/getData'
 import * as types from '@/store/mutation-types'
 export default {
   name: 'login',
@@ -63,36 +63,33 @@ export default {
     ...mapActions([
       'userLogin'
     ]
-
     ),
-    async submitForm () {
-
+    fecthData:async function (params) {
+      console.log(params)
     },
-    onSubmit () {
+    async submitForm (formName) {
       var _this = this
       let params = {
         loginName: this.loginForm.username,
-        loginPawd: this.loginForm.password
+        loginPsd: this.loginForm.password
       }
-      this.$http
-        .post('/users/login', params)
-        .then(function (res) {
-          if (res.status === 200) {
-            console.log('res.status:' + res.status)
-          }
-          console.log(res.data)
-          _this.userInfo = res.data
-          console.log('oogin-' + _this.userInfo)
-          console.log(_this.userInfo)
-          _this.$store.commit(types.SET_USER, (_this.userInfo))
-          let redirect = decodeURIComponent(_this.$route.query.redirect || '/')
-          _this.$router.push({
-            path: redirect
-          })
+      const res = await login(params)
+      console.log('res.state')
+      console.log(res)
+      console.log(res.data)
+      if (res.status === 200) {
+        console.log('res.status:---' + res.status)
+      }
+      _this.userInfo = res.data
+      if (res.status === 1) {
+        console.log(res.status)
+        console.log('oogin-' + JSON.stringify(_this.userInfo))
+        _this.$store.commit(types.SET_USER, _this.userInfo)
+        let redirect = decodeURIComponent(_this.$route.query.redirect || '/')
+        _this.$router.push({
+          path: redirect
         })
-        .catch(function (error) {
-          console.log(error)
-        })
+      }
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
