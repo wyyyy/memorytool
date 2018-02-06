@@ -1,5 +1,4 @@
 import shop from '../../api/shop'
-import api from '../../fetch/api'
 import {getAllProducts} from '@/api/getData'
 
 import * as types from '../mutation-types'
@@ -18,10 +17,10 @@ const getters = {
 const actions = {
   getDetail ({ commit }, palyload) {
     console.log('store-get-deatil')
-    api.PmList(palyload.id)
+    /* api.PmList(palyload.id)
       .then(res => {
         commit(types.GET_SPORTS_DETAIL, res)
-      })
+      }) */
   },
   async getAdminData ({commit}) {
     try {

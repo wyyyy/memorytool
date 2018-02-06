@@ -64,7 +64,7 @@ export default {
       'userLogin'
     ]
     ),
-    fecthData:async function (params) {
+    fecthData: async function (params) {
       console.log(params)
     },
     async submitForm (formName) {

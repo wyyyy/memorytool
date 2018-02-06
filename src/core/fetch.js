@@ -1,4 +1,4 @@
-import { baseUrl } from './env'
+import { baseUrl } from '@/config/env'
 import axiosHttp from '@/core/axiosHttp'
 function checkStatus (response) {
   // loading
