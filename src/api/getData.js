@@ -1,4 +1,4 @@
-import fetch from '@/core/mfetch'
+import fetch from '@/core/fetch'
 
 /**
  * 登陆
