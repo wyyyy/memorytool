@@ -16,6 +16,10 @@
      <router-link :to="'/pm/'">
                 <span>P-----M</span>
      </router-link>
+      <br>
+     <router-link :to="'/vendor/'">
+                <span>P-----vendorM</span>
+     </router-link>
      <el-button type="primary" @click="onSubmit" v-if="Logined">Quite</el-button>
      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">

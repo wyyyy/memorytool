@@ -65,9 +65,13 @@
       </el-table>
       <div class="block">
         <input type="text" v-model="name" />
-       <m-Page  :currentPage.sync="currentPage" v-on:btn-click="listen"></m-Page>
+       <m-Page  :pageCount="pageCount" @togglePage="togglePage($event)"></m-Page>
       </div>
-       <p>{{msg}}</p>
+       <p>{{msg}}{{currentPage}}</p>
+       <div class="block">
+        <input type="text" v-model="name" />
+       <m-Table  :columns="columns" @togglePage="togglePage($event)"></m-Table>
+      </div>
     </div>
   </div>
 
@@ -76,10 +80,12 @@
 <script>
 import {getAllTam, getTamDetail} from '@/api/pm'
 import mPage from '@/components/m-page.vue'
+import mTable from '@/components/m-table.vue'
 export default {
   name: 'tam',
   components: {
-    'm-Page': mPage
+    'm-Page': mPage,
+    'm-Table': mTable
   },
   beforeRouteEnter (to, from, next) {
     next((vm) => {
@@ -91,6 +97,12 @@ export default {
         username: '',
         password: ''
       },
+      columns: [
+        {label: 'username', value: 'Value'},
+        {label: 'username', value: 'Value'},
+        {label: 'username', value: 'Value'},
+        {label: 'username2', value: 'Value2'}
+      ],
       name: 'MYNAME',
       props: ['message'],
       tableData: [{
@@ -105,6 +117,7 @@ export default {
           label: '黄金糕'
         }],
       value: '',
+      pageCount: 8,
       CustomeName: '',
       ProjectName: '',
       ptotal: 1,
@@ -120,6 +133,12 @@ export default {
     }
   },
   methods: {
+    togglePage (indexPage) {
+      // 打印出当前页数
+      console.log('current page is')
+      console.log(indexPage)
+      this.currentPage = indexPage
+    },
     listen: function (data) {
       console.log('listen')
       this.msg = 'current page' + data

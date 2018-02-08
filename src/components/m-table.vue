@@ -1,23 +1,34 @@
-<template id="mPage">
+<template id="mTable">
   <div class="block">
     <h1>{{message}}</h1>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[2,10, 20, 50, 60]"
-      :page-size="2"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pageCount">
-    </el-pagination>
+    <div>
+      <el-table :data="tableData" border v-loading="loadingTb" style="width: 100%">
+        <el-table-column
+          v-for="column in columns"
+          :fixed="column.fixed"
+          :prop="column.value"
+          :label="column.label"
+          :key="column.value"
+          :width="column.width"
+          :sortable="column.sortable"
+          :formatter="column.formatter"
+          :class-name="column.className">
+        </el-table-column>
+      </el-table>
+  </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'm-page',
+  name: 'm-table',
   data: function () {
     return {
       message: 'i am page',
+      selectData: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        }],
       loading: false
     }
   },
