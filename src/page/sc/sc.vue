@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+    <h1>Shopping---sc-3-platform-mpn--vendor--- Cart Example</h1>
+    <h1>Density type Technology Nodes Sample Time eol() emmc firmware edition </h1>
+    <h1>  Platform Config</h1>
     <div class="search">
       <el-select v-model="value" placeholder="Pls Select">
         <el-option v-for="item in selectData" :key="item.value" :label="item.label" :value="item.value">

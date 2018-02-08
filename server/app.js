@@ -6,6 +6,7 @@ var index = require('./routes/index')
 var users = require('./routes/users')
 var sc = require('./routes/sc')
 var pm = require('./routes/pm')
+var tam = require('./routes/tam')
 var session = require('express-session')
 const morgan = require('morgan') // 命令行log显示
 const passport = require('passport')// 用户认证模块passport
@@ -57,6 +58,7 @@ app.use('/', index)
 app.use('/users', users)
 app.use('/sc', sc)
 app.use('/pm', pm)
+app.use('/tam', tam)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found')

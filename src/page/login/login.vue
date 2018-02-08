@@ -41,27 +41,6 @@ export default {
   mounted () {
     this.showLogin = true
   },
-  data () {
-    return {
-      placestr: 'Pls input the username',
-      loginForm: {
-        username: 'admin',
-        password: 'admin'
-      },
-      showLogin: true,
-      userInfo: {},
-      info: '',
-      rules: {
-        username: [
-          {required: true, message: '请输入活动名称', trigger: 'blur'},
-          {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-        ],
-        region: [
-          {required: true, message: '请选择活动区域', trigger: 'change'}
-        ]
-      }
-    }
-  },
   methods: {
     ...mapActions(['userLogin']),
     fecthData: async function (params) {
@@ -74,8 +53,6 @@ export default {
         loginPsd: this.loginForm.password
       }
       const res = await login(params)
-      console.log('res.state')
-      console.log(res)
       console.log(res.data)
       if (res.status === 200) {
         console.log('res.status:---' + res.status)
@@ -97,6 +74,27 @@ export default {
     reguser () {
       this.preventRepeat = false
       this.$router.push('/login/reg')
+    }
+  },
+  data () {
+    return {
+      placestr: 'Pls input the username',
+      loginForm: {
+        username: 'admin',
+        password: 'admin'
+      },
+      showLogin: true,
+      userInfo: {},
+      info: '',
+      rules: {
+        username: [
+          {required: true, message: '请输入活动名称', trigger: 'blur'},
+          {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+        ],
+        region: [
+          {required: true, message: '请选择活动区域', trigger: 'change'}
+        ]
+      }
     }
   }
 }

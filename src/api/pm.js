@@ -3,6 +3,10 @@ import fetch from '@/core/fetch'
 export const getAllProducts = data => fetch('/pm/list/all', data)
 export const getProductsDetail = data => fetch('/pm/list/detail', data)
 
+// get tam list count
+export const getAllTam = data => fetch('/tam/all', data)
+export const getTamDetail = data => fetch('/tam/detail', data)
+
 export const adminList = data => fetch('/admin/all', data)
 /**
  * api请求量

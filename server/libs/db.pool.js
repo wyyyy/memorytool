@@ -93,10 +93,32 @@ var execute = (sql, ...params) => {
     })
   })
 }
+// 执行代码，返回执行结果
+var queryAll = (sql, ...params) => {
+  return new Promise(function (resolve, reject) {
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        reject(err)
+        return
+      }
+      connection.query(sql, params, function (error, res) {
+        console.log('we are pool queryall')
+        console.log(sql)
+        connection.release()
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(res)
+      })
+    })
+  })
+}
 
 // 模块导出
 module.exports = {
   ROW: row,
+  queryAll: queryAll,
   FIRST: first,
   SINGLE: single,
   EXECUTE: execute

@@ -8,7 +8,7 @@ const reg = r => require.ensure([], () => r(require('../page/login/reg')), 'reg'
 const sc = r => require.ensure([], () => r(require('../page/sc/sc')), 'sc')
 const tam = r => require.ensure([], () => r(require('../page/tam/index')), 'tam')
 const pm = r => require.ensure([], () => r(require('../page/pm/index')), 'pm')
-const page = r => require.ensure([], () => r(require('@/components/page')), 'page')
+// const page = r => require.ensure([], () => r(require('@/components/page')), 'page')
 
 Vue.use(VueRouter)
 
@@ -50,7 +50,7 @@ const routes = [{
 },
 {
   path: '/page',
-  component: page
+  component: pm
 }
 ]
 // 页面刷新时，重新赋值token

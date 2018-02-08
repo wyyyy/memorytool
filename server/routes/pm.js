@@ -34,7 +34,7 @@ function GetDataCount (getHomeStr, req, res) {
         res.status(500).send('no datas').end()
       } else {
         // res.send(data)
-        res.json({count: '125'}).end()
+        res.json({count: 3}).end()
       }
     }
   })

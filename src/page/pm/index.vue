@@ -8,7 +8,7 @@
       </el-select>
       <el-date-picker v-model="startDate" type="date" placeholder="Select Date">
       </el-date-picker>
-      <el-button type="primary" v-on:click="subinfos('loginForm')" :loading="loadingBtn">Search</el-button>
+      <el-button type="primary" v-on:click="subinfos('loginForm')" :loading="loadingBtn">Seapmrch</el-button>
     </div>
     <div>
       <el-table :data="tableData" border v-loading="loadingTb" style="width: 90%">
@@ -79,8 +79,8 @@ export default {
         username: '',
         password: ''
       },
-      ptotal: 0,
-      currentPage: 0,
+      ptotal: 1,
+      currentPage: 1,
       pagesize: 2,
       currentPage3: 5,
       currentPage4: 4,
@@ -117,10 +117,15 @@ export default {
       return getAllProducts(params)
     },
     async subinfos (formName) {
-      Promise.all([this.content(), this.page()]).then(function (values) {
-        console.log('values')
-        console.log(values)
+      var _this = this
+      _this.loadingBtn = true
+      Promise.all([this.page(), this.content()]).then(function (values) {
+        console.log('val4ues')
+        console.log(typeof values[0].count)
+        _this.ptotal = values[0].count
+        console.log(values[1])
       })
+      _this.loadingBtn = false
     },
     async submitForm (formName) {
       const res = await getAllProducts({user_name: this.loginForm.username, password: this.loginForm.password})
@@ -138,34 +143,6 @@ export default {
       if (router === 'travel') {
         el.$store.dispatch('travelClicks', id)
       }
-    },
-    search: function (event) {
-      var _this = this
-      _this.loadingBtn = true
-      let accessToken = _this.$store.state.usersModule.token
-      console.log(accessToken)
-      let params = {
-        accessToken: accessToken,
-        pageSize: _this.pagesize,
-        pageIndex: _this.currentPage,
-        loginP3awd: _this.currentPage
-      }
-      this.$http.all([this.getUserAccount(), this.getUserPermissions()])
-        .then(this.$http.spread(function (acct, perms) {
-          //
-          console.log('two sql')
-        }))
-      console.log(params)
-      this.$http.get('/sc/list', {params: params})
-        .then(function (response) {
-          console.log(response.data.length + 'response')
-          console.log(_this.tableData = response.data)
-          _this.changePage()
-        })
-        .catch(function (error) {
-          console.log('error:' + error)
-        })
-      _this.loadingBtn = false
     }
   }
 }
