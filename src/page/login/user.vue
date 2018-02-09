@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Shopping---vendor-Example</h1>
+    <h1>Shopping---user--projectname--- Cart Example</h1>
     <div class="search">
       <el-button type="primary" v-on:click="subinfos('mForm')" :loading="loadingBtn">Search</el-button>
     </div>
@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import {getAllVendor, getVendorDetail} from '@/api/pm'
+import {getAllTam, getTamDetail} from '@/api/pm'
 import mPage from '@/components/m-page.vue'
 import mTable from '@/components/m-table.vue'
 export default {
-  name: 'vendor',
+  name: 'user',
   components: {
     'm-Page': mPage,
     'm-Table': mTable
@@ -118,14 +118,24 @@ export default {
       let params = {
         accessToken: _this.accessToken,
         pageSize: _this.pagesize,
-        pageIndex: _this.currentPage
+        pageIndex: _this.currentPage,
+        CustomeName: _this.CustomeName,
+        ProjectName: _this.ProjectName,
+        loginP3awd: _this.currentPage
       }
-      return getVendorDetail(params)
+      return getTamDetail(params)
     },
     async page () {
+      var _this = this
       let params = {
+        accessToken: _this.accessToken,
+        pageSize: _this.pagesize,
+        pageIndex: _this.currentPage,
+        mpn: _this.currentPage,
+        platform: _this.currentPage,
+        loginP3awd: _this.currentPage
       }
-      return getAllVendor(params)
+      return getAllTam(params)
     },
     async subinfos (formName) {
       var _this = this

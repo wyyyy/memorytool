@@ -1,18 +1,30 @@
 <template id="mTable">
   <div class="block">
-    <h1>{{message}}</h1>
     <div>
-      <el-table :data="tableData" border v-loading="loadingTb" style="width: 100%">
+      <el-table :data="tableData" border  stripe style="width: 95%" @row-click="tableDbEdit">
+         <el-table-column type="expand" >
+        <template  slot-scope="{row}">
+           <el-form label-position="left" inline class="m-table-expand">
+              <el-form-item
+              v-for="col in columns"
+              :key="col.mvalue"
+              :label="col.label"
+              v-if="col.show">
+            <span>{{row[col.mvalue]}}{{ col.label }}：{{ row[col.mvalue] }}</span>
+          </el-form-item>
+           </el-form>
+        </template>
+        </el-table-column>
         <el-table-column
           v-for="column in columns"
+          :key="column.mvalue"
           :fixed="column.fixed"
-          :prop="column.value"
+          :prop="column.mvalue"
           :label="column.label"
-          :key="column.value"
           :width="column.width"
           :sortable="column.sortable"
           :formatter="column.formatter"
-          :class-name="column.className">
+          :class-name="column.className"  >
         </el-table-column>
       </el-table>
   </div>
@@ -23,22 +35,22 @@ export default {
   name: 'm-table',
   data: function () {
     return {
-      message: 'i am page',
-      selectData: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }],
+      message: 'i am table m-table',
       loading: false
     }
   },
   watch: {
     pageSize: 'changeSize'
   },
+  computed: {
+  },
   props: {
     currentPage: Number,
     rowClick: Function,
     tableData: Array,
+    columns: Array, // {vlaue:对应数据对象中的属性，label：对应的是标题文字，className：对应的是列的样式类名}
+    columnsprop: Array,
+    columns2: Array,
     totalCount: Number,
     pageSizes: Array,
     checkBox: Boolean,
@@ -49,21 +61,30 @@ export default {
     sortChange: Function
   },
   methods: {
-    changeSize: function () {
-      this._data.tpageSize = this.pageSize
+    tableDbEdit (row, column, cell, event) {
+      console.log('table')
+      console.log(row, column, cell, event)
+    },
+    handleEdit (index, row) {
+      console.log(index, row)
     },
     selectionChange: function (val) {
       this.$emit('selectionChange', val)
-    },
-    handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
-      console.log(`每页 ${val} 条` + this.currentPage)
-      this.$emit('pageSizeChange', val)
-    },
-    handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
-      this.$emit('togglePage', val)
     }
   }
 }
 </script>
+<style scoped>
+ .m-table-expand {
+    font-size: 0;
+  }
+  .m-table-expand label {
+    width: 90px;
+    color: #f05c1;
+  }
+  .m-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>

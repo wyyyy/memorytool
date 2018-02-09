@@ -99,7 +99,6 @@ var queryAll = (sql, ...params) => {
     pool.getConnection(function (err, connection) {
       if (err) {
         reject(err)
-        return
       }
       connection.query(sql, params, function (error, res) {
         console.log('we are pool queryall')
@@ -107,8 +106,8 @@ var queryAll = (sql, ...params) => {
         connection.release()
         if (error) {
           reject(error)
-          return
         }
+        console.log(res)
         resolve(res)
       })
     })

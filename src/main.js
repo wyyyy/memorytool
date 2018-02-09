@@ -5,8 +5,11 @@ import router from '@/router/router.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/store'
+// import Egrid from 'egrid'
+
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+// Vue.use(Egrid)
 
 Vue.config.productionTip = false
 

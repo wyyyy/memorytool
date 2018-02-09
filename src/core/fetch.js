@@ -4,6 +4,7 @@ function checkStatus (response) {
   // loading
   // 如果http状态码正常，则直接返回数据
   if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
+    console.log('check status')
     return response
     // 如果不需要除了data之外的数据，可以直接 return response.data
   }
@@ -28,7 +29,6 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
   type = type.toUpperCase()
   url = baseUrl + url
   console.log('data--------------2018--------------------')
-  console.log(data)
   let params = data
   console.log(params)
   console.log(url)
@@ -48,12 +48,13 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
       console.log('get-' + url)
       axiosHttp.get(url, data)
         .then(response => {
+          console.log('response-2018')
+          console.log(response)
           checkStatus(response)
-          resolve(response.data)
+          resolve(response)
         })
         .catch(err => {
-          console.log(err)
-          // reject(err)
+          reject(err)
         })
     })
   } else if (type === 'POST') {

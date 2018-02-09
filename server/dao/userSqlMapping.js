@@ -15,10 +15,18 @@ var tam = {
   queryById: 'select * from user where id=?',
   queryAll: 'select * from tam'
 }
+var vendor = {
+  insert: 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
+  update: 'update user set name=?, age=? where id=?',
+  delete: 'delete from user where id=?',
+  queryById: 'select * from user where id=?',
+  queryAll: 'select * from mpn'
+}
 
 // 模块导出
 module.exports = {
   user: user,
   tam: tam,
+  vendor: vendor,
   EXECUTE: tam
 }

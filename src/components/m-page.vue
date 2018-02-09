@@ -1,6 +1,5 @@
 <template id="mPage">
   <div class="block">
-    <h1>{{message}}</h1>
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"

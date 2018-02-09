@@ -2,75 +2,18 @@
   <div class="hello">
     <h1>Shopping---tam-2-customename--projectname--- Cart Example</h1>
     <div class="search">
-      <el-select v-model="value" placeholder="Pls Select CustomeName">
-        <el-option v-for="item in selectData" :key="item.value" :label="item.label" :value="item.value">
-        </el-option>
-      </el-select>
-      <el-select v-model="value" placeholder="Pls Select ProjectName">
-        <el-option v-for="item in selectData" :key="item.value" :label="item.label" :value="item.value">
-        </el-option>
-      </el-select>
       <el-button type="primary" v-on:click="subinfos('mForm')" :loading="loadingBtn">Search</el-button>
     </div>
     <div>
-      <el-table :data="tableData" border v-loading="loadingTb" style="width: 90%">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="商品名称">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
-              <el-form-item label="UserName">
-                <span>{{ props.row.username }}</span>
-              </el-form-item>
-              <el-form-item label="Platform">
-                <span>{{ props.row.id }}</span>
-              </el-form-item>
-              <el-form-item label="ID">
-                <span>{{ props.row.username }}</span>
-              </el-form-item>
-              <el-form-item label="username">
-                <span>{{ props.row.username }}</span>
-              </el-form-item>
-              <el-form-item label="username">
-                <span>{{ props.row.address }}</span>
-              </el-form-item>
-              <el-form-item label="Desc">
-                <span>{{ props.row.userface }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column label="Platform" prop="id">
-          <router-link :to="'/list/detail' + 'id'">
-            <span>detail</span>
-          </router-link>
-        </el-table-column>
-        <el-table-column label="ProjectStatus" prop="ProjectStatus">
-        </el-table-column>
-        <el-table-column label="mpn" prop="mpn">
-        </el-table-column>
-        <el-table-column label="CustomerName" prop="CustomerName">
-        </el-table-column>
-        <el-table-column label="CustomerProjectName" prop="CustomerProjectName">
-        </el-table-column>
-        <el-table-column label="CustomerProjectLevel" prop="CustomerProjectLevel">
-        </el-table-column>
-         <el-table-column label="TA Date" prop="taDate">
-        </el-table-column>
-         <el-table-column label="1st/2nd Source" prop="telephone">
-        </el-table-column>
-         <el-table-column label="ForecastVolume(K)" prop="ForecastVolume">
-        </el-table-column>
-      </el-table>
       <div class="block">
-        <input type="text" v-model="name" />
        <m-Page  :pageCount="pageCount" @togglePage="togglePage($event)"></m-Page>
       </div>
        <p>{{msg}}{{currentPage}}</p>
        <div class="block">
-        <input type="text" v-model="name" />
-       <m-Table  :columns="columns" @togglePage="togglePage($event)"></m-Table>
+       <m-Table :columns="columns"
+                :tableData="tableData"
+                @togglePage="togglePage($event)">
+       </m-Table>
       </div>
     </div>
   </div>
@@ -98,25 +41,39 @@ export default {
         password: ''
       },
       columns: [
-        {label: 'username', value: 'Value'},
-        {label: 'username', value: 'Value'},
-        {label: 'username', value: 'Value'},
-        {label: 'username2', value: 'Value2'}
+        {label: 'mpn', mvalue: 'date', show: true},
+        {label: 'platform', mvalue: 'id', show: true},
+        {label: 'tam', mvalue: 'name', show: true, className: 'm-table-expand label'},
+        {label: 'customer', mvalue: 'address', show: false}
       ],
-      name: 'MYNAME',
-      props: ['message'],
+      columnsprop: [
+        {label: 'Header-mpn', mvalue: 'pname'},
+        {label: 'Header-platform', mvalue: 'pdate'},
+        {label: 'Header-customer', mvalue: 'pmpn'}
+      ],
       tableData: [{
         date: '2017-01-24',
-        id: '2017-01-24',
-        name: 'name',
-        address: 'Laddress'
+        id: 'tamid-woshiwalue',
+        name: 'value-name',
+        address: 'value-name',
+        pname: 'value-name',
+        pdate: 'value-name',
+        pmpn: 'value-Laddress'
+      },
+      {
+        date: '2017-01-25',
+        id: 'id-woshiwalue2',
+        name: 'value-name2',
+        address: 'value-name2',
+        pname: 'value-name2',
+        pdate: 'value-name2',
+        pmpn: 'value-Laddress2'
       }],
       selectData: [
         {
           value: '选项1',
           label: '黄金糕'
         }],
-      value: '',
       pageCount: 8,
       CustomeName: '',
       ProjectName: '',
@@ -195,4 +152,16 @@ export default {
 </script>
 
 <style scoped>
+ .m-table-expand {
+    font-size: 0;
+  }
+  .m-table-expand label {
+    width: 90px;
+    color: #f05c18;
+  }
+  .m-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 </style>

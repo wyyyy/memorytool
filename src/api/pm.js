@@ -7,6 +7,10 @@ export const getProductsDetail = data => fetch('/pm/list/detail', data)
 export const getAllTam = data => fetch('/tam/all', data)
 export const getTamDetail = data => fetch('/tam/detail', data)
 
+// get vendor list count
+export const getAllVendor = () => fetch('/vendor/all')
+export const getVendorDetail = data => fetch('/vendor/detail', data)
+
 export const adminList = data => fetch('/admin/all', data)
 /**
  * api请求量
