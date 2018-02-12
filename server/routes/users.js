@@ -3,7 +3,8 @@ var users = express.Router()
 const common = require('../libs/common')
 // var dbpool = require('../libs/db.pool')
 var db = require('../libs/db')
-var jws = require('jws')
+// var jws = require('jws')
+var tamDao = require('../dao/vendorDao')
 
 /* GET users listing. */
 users.get('/', function (req, res, next) {
@@ -17,7 +18,7 @@ users.get('/login', function (req, res, next) {
 /*
      *user reg func
      */
-users.post('/reg', (req, res) => {
+users.post('/reg', (req, res, next) => {
   let mObj = {}
   for (let obj in req.body) {
     mObj = JSON.parse(obj)
@@ -42,7 +43,7 @@ function delReg (insUserInfo, res) {
   })
 };
 
-users.post('/login', (req, res) => {
+users.post('/login', (req, res, next) => {
   console.log(req)
   /* for (let obj in req.body) {
     mObj = JSON.parse(obj)
@@ -51,6 +52,7 @@ users.post('/login', (req, res) => {
   let password = common.md5(req.body.loginPsd + common.MD5_SUFFXIE)
   const selectUser = `SELECT * FROM user where username='${username}'`
   console.log(selectUser)
+  tamDao.queryAll(req, res, next)
   db.query(selectUser, (err, data) => {
     if (err) {
       res.json({ 'msg': '服务器出错', 'status': 0 })

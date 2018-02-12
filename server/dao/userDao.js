@@ -1,14 +1,7 @@
 // dao/userDao.js
 // 实现与MySQL交互
-var mysql = require('mysql')
-var $conf = require('../conf/db')
-var $util = require('../util/util')
 var $sql = require('./userSqlMapping')
 var dbpool = require('../libs/db.pool')
-
-// 使用连接池，提升性能
-var pool = mysql.createPool($util.extend({}, $conf.mysql))
-
 // 向前台返回JSON方法的简单封装
 /* var jsonWrite = function (res, ret) {
   if (typeof ret === 'undefined') {
@@ -20,7 +13,15 @@ var pool = mysql.createPool($util.extend({}, $conf.mysql))
     res.json(ret)
   }
 } */
-
 module.exports = {
-  queryAll: dbpool.queryAll
+  queryAll: function (req, res, next) {
+    // var param = req.query || req.params
+    console.log($sql.user.queryAll)
+    dbpool.queryAll($sql.user.queryByName)
+  },
+  queryByName: function (req, res, next) {
+    // var param = req.query || req.params
+    console.log($sql.user.queryAll)
+    dbpool.queryAll($sql.user.queryByName)
+  }
 }
