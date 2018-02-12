@@ -52,7 +52,11 @@ users.post('/login', (req, res, next) => {
   let password = common.md5(req.body.loginPsd + common.MD5_SUFFXIE)
   const selectUser = `SELECT * FROM user where username='${username}'`
   console.log(selectUser)
-  tamDao.queryAll(req, res, next)
+  tamDao.queryAll(req, res, next).then(function (data) {
+    console.log(data)
+    let dataw = data[0]
+    console.log(dataw.password)
+  })
   db.query(selectUser, (err, data) => {
     if (err) {
       res.json({ 'msg': '服务器出错', 'status': 0 })
