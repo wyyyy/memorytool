@@ -6,6 +6,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store/store'
 // import Egrid from 'egrid'
+import axiosPlugin from './core/axiosHttp'
+Vue.use(axiosPlugin)
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)

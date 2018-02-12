@@ -29,6 +29,7 @@ axiosHttp.interceptors.request.use(
     if (store.state.token) {
       config.headers.Authorization = `token ${store.state.token}`
     }
+    // post put delete
     if (config.method === 'post') {
       console.log('request 拦截器 ')
       config.data = qs.stringify(config.data)
@@ -61,4 +62,9 @@ axiosHttp.interceptors.response.use(
     return Promise.reject(error.response.data)
   })
 
-export default axiosHttp
+// 对axios的实例重新封装成一个plugin ,方便 Vue.use(xxxx)
+export default {
+  install: function (Vue, Option) {
+    Object.defineProperty(Vue.prototype, '$http', { value: axiosHttp })
+  }
+}
